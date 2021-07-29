@@ -10,12 +10,15 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.FragmentActivity
+import androidx.viewbinding.ViewBinding
 import com.lxn.examplepatternretrofit.R
 import com.lxn.examplepatternretrofit.data.datasource.sharepreference.AppPreferences
 import com.lxn.examplepatternretrofit.di.resources.ResourceServices
@@ -25,8 +28,7 @@ import java.io.Serializable
 import javax.inject.Inject
 
 @ExperimentalCoroutinesApi
-@AndroidEntryPoint
-abstract class BaseActivity : FragmentActivity(), BaseBehavior {
+abstract class BaseActivity<VB : ViewBinding> : FragmentActivity(), BaseBehavior {
 
     private var alertDialogBuilder: AlertDialog.Builder? = null
 
@@ -38,23 +40,30 @@ abstract class BaseActivity : FragmentActivity(), BaseBehavior {
     @Inject
     lateinit var appPreferences: AppPreferences
 
-    @get:LayoutRes
-    protected abstract val layoutId: Int?
+
+    protected lateinit var binding: VB
+
+    abstract fun inflateLayout(layoutInflater: LayoutInflater) : VB
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         overridePendingTransition(0, 0)
         super.onCreate(savedInstanceState)
-        layoutId?.let { setContentView(it) }
-        addNetworkCallBack()
+        binding = inflateLayout(layoutInflater)
+        setContentView(binding.root)
         onSetupView()
         onViewLoaded()
 
     }
 
-    open fun initViewModel(viewModel: BaseViewModel) {
-        viewModel.init(appPreferences, resourcesService)
+    override fun onDestroy() {
+        super.onDestroy()
     }
+
+    open fun setUpBindingView(T: ViewBinding) {
+
+    }
+
 
     private fun addNetworkCallBack() {
         val request =
