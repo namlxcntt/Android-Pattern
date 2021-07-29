@@ -1,4 +1,4 @@
-package com.lxn.examplepatternretrofit.di
+package com.lxn.examplepatternretrofit.di.module
 
 import android.content.Context
 import com.google.gson.Gson
@@ -8,7 +8,6 @@ import com.lxn.examplepatternretrofit.data.model.EntityMapper
 import com.lxn.examplepatternretrofit.data.model.Match
 import com.lxn.examplepatternretrofit.data.datasource.network.mappers.NetworkMapper
 import com.lxn.examplepatternretrofit.data.datasource.network.model.MatchObjectNetwork
-import com.lxn.examplepatternretrofit.data.datasource.network.retrofit.MatchRetrofit
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -79,12 +78,5 @@ object NetworkModule {
         return Retrofit.Builder().baseUrl(Constant.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create()).client(okHttpClient)
     }
-
-    @Provides
-    @Singleton
-    fun provideMatchService(retrofit: Retrofit.Builder): MatchRetrofit {
-        return retrofit.build().create(MatchRetrofit::class.java)
-    }
-
 
 }

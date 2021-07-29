@@ -5,18 +5,19 @@ import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
 import com.lxn.examplepatternretrofit.constant.DataState
 import com.lxn.examplepatternretrofit.data.model.Match
+import com.lxn.examplepatternretrofit.presentation.base.BaseViewModel
 import com.lxn.examplepatternretrofit.repository.MainRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
+
 @ExperimentalCoroutinesApi
 class MainViewModel @ViewModelInject constructor(
-    @Assisted private val savedStateHandle: SavedStateHandle,
     private val mainRepository: MainRepository
-) :
-    ViewModel() {
+) : BaseViewModel() {
+
 
     private val _dataState: MutableLiveData<DataState<List<Match>>> = MutableLiveData()
 
@@ -28,9 +29,9 @@ class MainViewModel @ViewModelInject constructor(
         viewModelScope.launch {
             mainRepository.getMatch().onEach { dataState ->
                 _dataState.value = dataState
-
             }.launchIn(viewModelScope)
         }
+        appPreferences.saveStringToPreference()
     }
 
 //    fun safeBreakingGetMatch() {

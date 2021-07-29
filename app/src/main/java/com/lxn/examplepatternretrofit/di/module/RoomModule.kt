@@ -1,4 +1,4 @@
-package com.lxn.examplepatternretrofit.di
+package com.lxn.examplepatternretrofit.di.module
 
 import android.content.Context
 import androidx.room.Room

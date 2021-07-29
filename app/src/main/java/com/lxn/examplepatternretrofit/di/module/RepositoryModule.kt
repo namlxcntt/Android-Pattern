@@ -1,4 +1,4 @@
-package com.lxn.examplepatternretrofit.di
+package com.lxn.examplepatternretrofit.di.module
 
 import com.lxn.examplepatternretrofit.data.datasource.cache.db.MatchDao
 import com.lxn.examplepatternretrofit.data.datasource.cache.mappers.CacheMapper
