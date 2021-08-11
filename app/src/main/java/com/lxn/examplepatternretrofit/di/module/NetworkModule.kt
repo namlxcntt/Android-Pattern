@@ -61,10 +61,11 @@ object NetworkModule {
         client.writeTimeout(Constant.LOADER_EXPIRED_TIME.toLong(), TimeUnit.SECONDS)
         client.addInterceptor { chain ->
             val original = chain.request()
-            val request: Request
-            val builder: Request.Builder = original.newBuilder()
-                .method(original.method(), original.body())
-            request = builder.build()
+            val url =
+                original.url().newBuilder().addQueryParameter("api_key", Constant.API_KEY).build()
+            val builder: Request.Builder =
+                original.newBuilder().url(url).method(original.method(), original.body())
+            val request = builder.build()
 
             return@addInterceptor chain.proceed(request)
         }
@@ -75,8 +76,11 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit.Builder {
-        return Retrofit.Builder().baseUrl(Constant.BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create()).client(okHttpClient)
+        return Retrofit
+            .Builder()
+            .baseUrl(Constant.BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient)
     }
 
 }

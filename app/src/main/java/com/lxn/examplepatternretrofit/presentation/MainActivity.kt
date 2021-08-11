@@ -1,13 +1,8 @@
 package com.lxn.examplepatternretrofit.presentation
-
-
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.activity.viewModels
-import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
-
 import com.lxn.examplepatternretrofit.constant.DataState
 import com.lxn.examplepatternretrofit.data.model.Match
 import com.lxn.examplepatternretrofit.databinding.ActivityMainBinding
@@ -19,7 +14,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
 @AndroidEntryPoint
-class MainActivity() : BaseActivity<ActivityMainBinding>()
+class MainActivity : BaseActivity<ActivityMainBinding>()
  {
 
     private val viewModel: MainViewModel by viewModels()
@@ -30,32 +25,30 @@ class MainActivity() : BaseActivity<ActivityMainBinding>()
     }
 
     override fun onSetupView() {
-        adapterMatch = MatchAdapter()
-        binding.rcvMatch.apply {
-            layoutManager = LinearLayoutManager(this@MainActivity)
-            adapter = adapterMatch
-        }
-
-
+//        adapterMatch = MatchAdapter()
+//        binding.rcvMatch.apply {
+//            layoutManager = LinearLayoutManager(this@MainActivity)
+//            adapter = adapterMatch
+//        }
     }
 
 
     private fun subscribeObservers() {
-        viewModel.getMatch()
-        viewModel.dataState.observe(this) { dataState ->
-            when (dataState) {
-                is DataState.Success<List<Match>> -> {
-                    onLoading(false)
-                    adapterMatch.addAllList(dataState.data as ArrayList<Match>)
-                }
-                is DataState.Error -> {
-                    onLoading(false)
-                }
-                is DataState.Loading -> {
-                    onLoading(true)
-                }
-            }
-        }
+//        viewModel.getMatch()
+//        viewModel.dataState.observe(this) { dataState ->
+//            when (dataState) {
+//                is DataState.Success<List<Match>> -> {
+//                    onLoading(false)
+//                    adapterMatch.addAllList(dataState.data as ArrayList<Match>)
+//                }
+//                is DataState.Error -> {
+//                    onLoading(false)
+//                }
+//                is DataState.Loading -> {
+//                    onLoading(true)
+//                }
+//            }
+//        }
     }
 
     override fun onLoading(isLoading: Boolean) {

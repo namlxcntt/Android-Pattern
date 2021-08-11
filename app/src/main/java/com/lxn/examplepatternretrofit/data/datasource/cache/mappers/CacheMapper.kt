@@ -21,6 +21,7 @@ class CacheMapper @Inject constructor() : EntityMapper<MatchCacheEntity, Match> 
         )
     }
 
+
     override fun mapToEntity(domainModel: Match): MatchCacheEntity {
         return MatchCacheEntity(
             id = domainModel.id,

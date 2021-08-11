@@ -31,9 +31,9 @@ class MainViewModel @Inject constructor(
 
     fun getMatch() {
         viewModelScope.launch {
-            mainRepository.getMatch().onEach { dataState ->
-                _dataState.value = dataState
-            }.launchIn(viewModelScope)
+//            mainRepository.getMatch().onEach { dataState ->
+//                _dataState.value = dataState
+//            }.launchIn(viewModelScope)
         }
         appPreferences.saveStringToPreference()
     }

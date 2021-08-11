@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface MatchRetrofit {
 
-    @GET("lichthidau/all")
-    suspend fun get(): List<MatchObjectNetwork>
+//    @GET("lichthidau/all")
+//    suspend fun get(): List<MatchObjectNetwork>
 }
